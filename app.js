@@ -4,6 +4,8 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var http = require('http');
+var config = require('./config')();
 
 var routes = require('./routes/index');
 var users = require('./routes/users');
@@ -46,6 +48,9 @@ if (app.get('env') === 'development') {
   });
 }
 
+http.createServer(app).listen(config.port, function(){
+  console.log('Express listening on '+ config.port);
+})
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
@@ -55,6 +60,7 @@ app.use(function(err, req, res, next) {
     error: {}
   });
 });
+
 
 
 module.exports = app;
